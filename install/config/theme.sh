@@ -12,6 +12,14 @@ mkdir -p ~/.config/omarchy/themes
 
 # Set initial theme
 omarchy-theme-set "Tokyo Night"
+
+# Force GNOME defaults for Fedora installs
+if command -v gsettings >/dev/null 2>&1; then
+  gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark' >/dev/null 2>&1 || true
+  gsettings set org.gnome.desktop.interface icon-theme 'breeze-dark' >/dev/null 2>&1 || true
+  gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark' >/dev/null 2>&1 || true
+fi
+
 rm -rf ~/.config/chromium/SingletonLock # otherwise archiso will own the chromium singleton
 
 # Set specific app links for current theme
