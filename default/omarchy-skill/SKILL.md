@@ -11,17 +11,17 @@ description: >
   source development in ~/.local/share/omarchy/ and omarchy-dev-* workflows.
 ---
 
-# Omarchy Mac Skill
+# Omarchy Mac Fedora Skill
 
-Manage Omarchy Mac systems on Fedora Asahi Remix Minimal (aarch64/Apple Silicon) with Hyprland.
+Manage Omarchy Mac Fedora systems on Fedora Asahi Remix Minimal (aarch64/Apple Silicon) with Hyprland.
 
 ## Target Platform
 
-This skill is for the Omarchy Mac fork and assumes:
+This skill is for the Omarchy Mac Fedora fork and assumes:
 
 - Fedora Asahi Remix Minimal
 - Apple Silicon (M1/M2/M3/M4) running `aarch64`
-- Omarchy Mac installed from `malik-na/omarchy-mac`
+- Omarchy Mac Fedora installed from `malik-na/omarchy-mac-fedora`
 
 Unsupported targets for this skill:
 - Arch / ALARM-based Omarchy installs
@@ -53,7 +53,7 @@ It is not for contributing to Omarchy source code.
 
 **For end-user customization tasks, NEVER modify anything in `~/.local/share/omarchy/`** - but READING is safe and encouraged.
 
-This directory contains Omarchy Mac source files managed by git. Any changes will be:
+This directory contains Omarchy Mac Fedora source files managed by git. Any changes will be:
 - Lost on next `omarchy-update`
 - Cause conflicts with upstream
 - Break the system's update mechanism
@@ -79,9 +79,9 @@ This directory contains Omarchy Mac source files managed by git. Any changes wil
 - `~/.config/omarchy/themes/<custom-name>/` - Custom themes (must be real directories)
 - `~/.config/omarchy/hooks/` - Custom automation hooks
 
-## Omarchy Mac Architecture
+## Omarchy Mac Fedora Architecture
 
-Omarchy Mac is built on:
+Omarchy Mac Fedora is built on:
 
 | Component | Purpose | Config Location |
 |-----------|---------|-----------------|
@@ -95,7 +95,7 @@ Omarchy Mac is built on:
 
 ## Command Discovery
 
-Omarchy Mac provides ~145 commands following `omarchy-<category>-<action>` pattern.
+Omarchy Mac Fedora provides ~145 commands following `omarchy-<category>-<action>` pattern.
 
 ```bash
 # List all omarchy commands
@@ -317,7 +317,7 @@ omarchy-font-set <name>         # Change font
 
 ```bash
 omarchy-update                  # Full system update
-omarchy-version                 # Show Omarchy Mac version
+omarchy-version                 # Show Omarchy Mac Fedora version
 omarchy-debug --no-sudo --print # Debug info (ALWAYS use these flags)
 omarchy-lock-screen             # Lock screen
 omarchy-system-shutdown         # Shutdown
@@ -360,7 +360,7 @@ When user requests system changes:
 
 ## Out of Scope
 
-When contributing to Omarchy Mac itself (e.g., fixing bugs, adding features), migrations are used to apply changes to existing installations.
+When contributing to Omarchy Mac Fedora itself (e.g., fixing bugs, adding features), migrations are used to apply changes to existing installations.
 
 ### Creating Migrations
 

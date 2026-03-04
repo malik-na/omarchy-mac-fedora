@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # =============================================================================
-# Omarchy Mac Bootstrap Installer
+# Omarchy Mac Fedora Bootstrap Installer
 # =============================================================================
 # This script is intended to be run as root on a fresh Arch/Asahi install.
 # It creates a user (wheel), installs core dependencies (sudo, git, base-devel),
@@ -167,10 +167,10 @@ install_yay() {
 
 clone_repo_to_user() {
     local username="$1"
-    local repo="${OMARCHY_REPO:-malik-na/omarchy-mac}"
+    local repo="${OMARCHY_REPO:-malik-na/omarchy-mac-fedora}"
     local ref="${OMARCHY_REF:-main}"
 
-    print_step "Cloning Omarchy Mac into user's home"
+    print_step "Cloning Omarchy Mac Fedora into user's home"
     su - "$username" -c "bash -lc 'set -e; mkdir -p ~/.local/share; rm -rf ~/.local/share/omarchy; git clone https://github.com/${repo}.git ~/.local/share/omarchy; cd ~/.local/share/omarchy; if [[ \"${ref}\" != \"main\" ]]; then git fetch origin \"${ref}\" && git checkout \"${ref}\"; fi'"
     print_success "Repository cloned"
 }
