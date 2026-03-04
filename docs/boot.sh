@@ -77,8 +77,8 @@ fedora_install_package git
 # Clone Repository
 # ============================================================================
 
-# Use custom repo if specified, otherwise default to malik-na/omarchy-mac
-OMARCHY_REPO="${OMARCHY_REPO:-malik-na/omarchy-mac}"
+# Use custom repo if specified, otherwise default to malik-na/omarchy-mac-fedora
+OMARCHY_REPO="${OMARCHY_REPO:-malik-na/omarchy-mac-fedora}"
 
 echo -e "\nCloning Omarchy from: https://github.com/${OMARCHY_REPO}.git (branch: $OMARCHY_BRANCH)"
 
