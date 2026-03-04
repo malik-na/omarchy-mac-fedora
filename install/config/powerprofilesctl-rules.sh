@@ -1,3 +1,5 @@
+#!/bin/bash
+
 if omarchy-battery-present; then
   mapfile -t profiles < <(omarchy-powerprofiles-list)
 

@@ -1,3 +1,5 @@
+#!/bin/bash
+
 if omarchy-battery-present; then
   cat <<EOF | sudo tee "/etc/udev/rules.d/99-wifi-powersave.rules"
 SUBSYSTEM=="power_supply", ATTR{type}=="Mains", ATTR{online}=="0", RUN+="$HOME/.local/share/omarchy/bin/omarchy-wifi-powersave on"

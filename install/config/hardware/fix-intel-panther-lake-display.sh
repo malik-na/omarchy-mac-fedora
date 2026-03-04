@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Fix display issues on Intel Panther Lake (Xe3) GPUs by disabling power-saving
 # features that cause screen to run at 10hz (e.g. Dell XPS 2026).
 if lspci | grep -iE 'vga|3d|display' | grep -qi 'panther lake'; then
