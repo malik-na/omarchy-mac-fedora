@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # Ensure target directory exists
 mkdir -p "$HOME/.claude/skills"

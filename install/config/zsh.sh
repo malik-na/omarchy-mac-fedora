@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 # Install zsh configuration for new Omarchy installations
 
 set -euo pipefail
