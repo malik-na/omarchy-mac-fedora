@@ -78,11 +78,9 @@ echo -e "\n📦 Installing Omarchy for: \e[32m$OMARCHY_BRANCH\e[0m"
 # Package Manager Setup (distro-specific, via abstraction)
 # ============================================================================
 
-OMARCHY_INSTALL="${OMARCHY_INSTALL:-$HOME/.local/share/omarchy/install}"
-source "$OMARCHY_INSTALL/helpers/packages-fedora.sh"
 echo -e "\n🔄 Updating system packages (dnf)..."
-fedora_update_system
-fedora_install_package git
+sudo dnf upgrade -y --refresh
+sudo dnf install -y git
 
 # ============================================================================
 # Clone Repository
@@ -111,4 +109,4 @@ rm -rf ~/.local/share/omarchy/
 git clone -b "$OMARCHY_BRANCH" "https://github.com/${OMARCHY_REPO}.git" ~/.local/share/omarchy >/dev/null
 
 echo -e "\nInstallation starting..."
-source ~/.local/share/omarchy/install.sh
+bash ~/.local/share/omarchy/install.sh
