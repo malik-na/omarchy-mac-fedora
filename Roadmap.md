@@ -25,7 +25,7 @@
 
 ## Phase 3: Testing, Integration & Documentation
 
-- [ ] 3.1 Test installation and all features on Fedora Asahi Minimal
+- [ ] 3.1 Test installation and all features on Fedora Asahi Minimal (automation ready via `tests/run-fedora-asahi-phase3-1.sh`; strict device pass pending)
 - [ ] 3.2 Debug and fix issues with package installs, configuration, and system integration
 - [ ] 3.3 Update documentation (README, install guides) for Fedora-specific instructions
 - [ ] 3.4 Document differences and known issues between Fedora and Arch versions

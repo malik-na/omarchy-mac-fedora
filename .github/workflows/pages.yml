@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [dev]
   workflow_dispatch:
 
 permissions:
@@ -26,23 +26,34 @@ jobs:
 
       - name: Prepare site files
         run: |
-          mkdir -p _site
-          cp index.html _site/
-          cp install.sh _site/
-          cp boot.sh _site/
-          cp bootstrap.sh _site/
-          cp -r bin _site/
-          cp -r config _site/
-          cp -r default _site/
-          cp -r install _site/
-          cp -r migrations _site/
-          cp -r applications _site/
-          cp -r autostart _site/
-          cp version _site/
-          cp .nojekyll _site/
-          # Copy any additional assets
-          [ -f icon.png ] && cp icon.png _site/ || true
-          [ -f logo.svg ] && cp logo.svg _site/ || true
+          SITE_DIR="_site"
+          mkdir -p "$SITE_DIR"
+          copy_items=(
+            index.html
+            install.sh
+            boot.sh
+            bootstrap.sh
+            bin
+            config
+            default
+            install
+            migrations
+            applications
+            autostart
+            version
+            .nojekyll
+            icon.png
+            logo.svg
+          )
+
+          for item in "${copy_items[@]}"; do
+            [[ -e $item ]] || continue
+            if [[ -d $item ]]; then
+              cp -r "$item" "$SITE_DIR/"
+            else
+              cp "$item" "$SITE_DIR/"
+            fi
+          done
 
       - name: Setup Pages
         uses: actions/configure-pages@v4

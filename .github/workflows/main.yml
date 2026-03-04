@@ -103,13 +103,7 @@ jobs:
           DRY_RUN: "1"
           # Add any other env your scripts respect to avoid destructive actions
         run: |
-          # TODO: Replace with the specific entry points you want to verify
-          # Examples:
-          # ./scripts/set-arm-mirrors.sh --help || true
-          # ./scripts/timezone/auto-detect-timezone.sh --help || true
-          # ./install.sh --dry-run || true
-          echo "Add your smoke commands here."
-          exit 0
+          ./tests/run-fedora-asahi-phase3-1.sh --ci
 
   # 3) OPTIONAL: Arch Linux ARM container tests
   # NOTE: Only enable if you have a multi-arch container image that supports aarch64.

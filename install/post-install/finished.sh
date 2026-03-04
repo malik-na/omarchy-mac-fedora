@@ -59,6 +59,12 @@ if sudo test -f /etc/sudoers.d/99-omarchy-installer; then
   sudo rm -f /etc/sudoers.d/99-omarchy-installer &>/dev/null
 fi
 
+if [[ ${OMARCHY_SKIP_REBOOT_PROMPT:-0} == "1" ]]; then
+  echo
+  echo "[Omarchy] OMARCHY_SKIP_REBOOT_PROMPT=1 set, skipping reboot prompt."
+  exit 0
+fi
+
 # Exit gracefully if user chooses not to reboot
 if gum confirm --show-help=false --default --affirmative "Reboot Now" --negative "" ""; then
   # Clear screen to hide any shutdown messages

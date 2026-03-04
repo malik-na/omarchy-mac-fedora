@@ -1,4 +1,5 @@
 #!/bin/bash
+
 # linux-modules-cleanup.service is Arch Linux specific; skip on Fedora
 if [[ -f /etc/arch-release ]]; then
   chrootable_systemctl_enable linux-modules-cleanup.service
