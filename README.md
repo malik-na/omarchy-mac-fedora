@@ -77,23 +77,6 @@ Fedora Asahi Minimal normally includes the required first-boot setup prompts; us
 
 ---
 
-## Quick start
-
-From your Fedora Asahi user session:
-
-```bash
-sudo dnf install git
-git clone https://github.com/malik-na/omarchy-mac-fedora.git ~/.local/share/omarchy
-cd ~/.local/share/omarchy
-bash install.sh
-```
-
-The installer enforces Fedora Asahi aarch64 in preflight checks.
-
----
-
-## Detailed installation
-
 ### Prepare Fedora Asahi Minimal (required)
 
 Fedora Asahi Minimal always starts with a TTY setup flow. Complete all prompts there before continuing:
