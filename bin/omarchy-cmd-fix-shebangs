@@ -1,0 +1,126 @@
+#!/bin/bash
+
+set -euo pipefail
+
+usage() {
+  cat <<'EOF'
+Usage: omarchy-cmd-fix-shebangs [--check] [--path <dir>]
+
+Automatically fixes shell script shebang issues:
+- Adds missing shebangs as #!/bin/bash
+- Rewrites non-bash shebangs to #!/bin/bash
+
+Options:
+  --check       Report files that need fixes and exit 1 if any are found.
+  --path <dir>  Scan this repo path instead of current directory.
+  --help        Show this help.
+EOF
+}
+
+MODE="apply"
+REPO_PATH=""
+
+while (( $# > 0 )); do
+  case "$1" in
+    --check)
+      MODE="check"
+      ;;
+    --path)
+      shift
+      if (( $# == 0 )); then
+        echo "Missing value for --path"
+        exit 2
+      fi
+      REPO_PATH="$1"
+      ;;
+    --help)
+      usage
+      exit 0
+      ;;
+    *)
+      echo "Unknown argument: $1"
+      usage
+      exit 2
+      ;;
+  esac
+  shift
+done
+
+if [[ -n $REPO_PATH ]]; then
+  if [[ ! -d $REPO_PATH ]]; then
+    echo "Path does not exist: $REPO_PATH"
+    exit 2
+  fi
+  cd "$REPO_PATH"
+fi
+
+if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+  echo "Not inside a git repository"
+  exit 2
+fi
+
+readarray -d '' files < <(git ls-files -z "*.sh")
+
+if (( ${#files[@]} == 0 )); then
+  echo "No tracked shell scripts found"
+  exit 0
+fi
+
+fixed_count=0
+missing_count=0
+
+for file in "${files[@]}"; do
+  if [[ $file == migrations/* ]]; then
+    continue
+  fi
+
+  if [[ ! -f $file ]]; then
+    continue
+  fi
+
+  first_line=""
+  IFS= read -r first_line < "$file" || true
+
+  if [[ $first_line == "#!/bin/bash" ]]; then
+    continue
+  fi
+
+  if [[ $MODE == "check" ]]; then
+    echo "$file"
+    ((missing_count += 1))
+    continue
+  fi
+
+  tmp_file=$(mktemp)
+
+  if [[ $first_line == '#!'* ]]; then
+    {
+      printf '%s\n' '#!/bin/bash'
+      tail -n +2 "$file"
+    } > "$tmp_file"
+    echo "Rewrote shebang: $file"
+  else
+    {
+      printf '%s\n' '#!/bin/bash'
+      cat "$file"
+    } > "$tmp_file"
+    echo "Added shebang: $file"
+  fi
+
+  chmod --reference "$file" "$tmp_file"
+  mv "$tmp_file" "$file"
+  ((fixed_count += 1))
+done
+
+if [[ $MODE == "check" ]]; then
+  if (( missing_count > 0 )); then
+    echo
+    echo "Found $missing_count script(s) with shebang issues"
+    exit 1
+  fi
+  echo "All tracked shell scripts have #!/bin/bash"
+  exit 0
+fi
+
+echo
+echo "Updated $fixed_count script(s)"
