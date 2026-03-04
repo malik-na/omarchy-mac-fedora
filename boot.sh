@@ -18,7 +18,7 @@ clear
 echo -e "\n$ansi_art\n"
 
 # Validate sudo access and refresh timestamp to minimize password prompts
-echo "🔐 Omarchy Mac Installation requires administrator access..."
+echo "🔐 Omarchy Mac Fedora installation requires administrator access..."
 if ! sudo -v; then
   echo "❌ Error: sudo access required. Please run with proper permissions."
   exit 1
@@ -43,7 +43,7 @@ trap 'sudo -k; kill ${SUDO_KEEPALIVE_PID:-} 2>/dev/null' EXIT INT TERM
 # ============================================================================
 
 if [[ ! -f /etc/fedora-release ]]; then
-  echo -e "\n❌ Unsupported distro. Omarchy Mac now supports Fedora Asahi Remix only."
+  echo -e "\n❌ Unsupported distro. Omarchy Mac Fedora supports Fedora Asahi Remix only."
   exit 1
 fi
 
@@ -67,18 +67,16 @@ echo -e "\n📦 Installing Omarchy for: \e[32m$OMARCHY_BRANCH\e[0m"
 # Package Manager Setup (distro-specific, via abstraction)
 # ============================================================================
 
-OMARCHY_INSTALL="${OMARCHY_INSTALL:-$HOME/.local/share/omarchy/install}"
-source "$OMARCHY_INSTALL/helpers/packages-fedora.sh"
 echo -e "\n🔄 Updating system packages (dnf)..."
-fedora_update_system
-fedora_install_package git
+sudo dnf upgrade -y --refresh
+sudo dnf install -y git
 
 # ============================================================================
 # Clone Repository
 # ============================================================================
 
-# Use custom repo if specified, otherwise default to malik-na/omarchy-mac
-OMARCHY_REPO="${OMARCHY_REPO:-malik-na/omarchy-mac}"
+# Use custom repo if specified, otherwise default to malik-na/omarchy-mac-fedora
+OMARCHY_REPO="${OMARCHY_REPO:-malik-na/omarchy-mac-fedora}"
 
 echo -e "\nCloning Omarchy from: https://github.com/${OMARCHY_REPO}.git (branch: $OMARCHY_BRANCH)"
 
@@ -100,4 +98,4 @@ rm -rf ~/.local/share/omarchy/
 git clone -b "$OMARCHY_BRANCH" "https://github.com/${OMARCHY_REPO}.git" ~/.local/share/omarchy >/dev/null
 
 echo -e "\nInstallation starting..."
-source ~/.local/share/omarchy/install.sh
+bash ~/.local/share/omarchy/install.sh

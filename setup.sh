@@ -3,13 +3,13 @@
 # =============================================================================
 # Omarchy Bootstrap Setup Script
 # =============================================================================
-# This script downloads the omarchy-mac repository to the correct location
+# This script downloads the omarchy-mac-fedora repository to the correct location
 # and prepares the local bootstrap environment on pacman-based systems.
 #
 # Usage (as root after first boot on supported pacman-based distro):
-#   curl -fsSL https://raw.githubusercontent.com/malik-na/omarchy-mac/main/setup.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/malik-na/omarchy-mac-fedora/main/setup.sh | bash
 #   OR
-#   wget -qO- https://raw.githubusercontent.com/malik-na/omarchy-mac/main/setup.sh | bash
+#   wget -qO- https://raw.githubusercontent.com/malik-na/omarchy-mac-fedora/main/setup.sh | bash
 # =============================================================================
 
 set -e
@@ -74,10 +74,10 @@ check_root() {
 
 # Clone repository and setup
 clone_repository() {
-    local repo_url="https://github.com/malik-na/omarchy-mac.git"
+    local repo_url="https://github.com/malik-na/omarchy-mac-fedora.git"
     local target_dir="/root/.local/share/omarchy"
     
-    print_step "Downloading Omarchy Mac repository..."
+    print_step "Downloading Omarchy Mac Fedora repository..."
     
     # Install git if not available
     if ! command -v git &>/dev/null; then
@@ -100,7 +100,7 @@ clone_repository() {
     echo ""
     print_step "Next Steps:"
     echo ""
-    print_info "The Omarchy Mac repository has been downloaded."
+    print_info "The Omarchy Mac Fedora repository has been downloaded."
     print_info "Now run the actual bootstrap script:"
     echo ""
     echo -e "  ${CYAN}cd ~/.local/share/omarchy${NC}"
@@ -114,7 +114,7 @@ clone_repository() {
 main() {
     print_banner
     
-    echo -e "${BOLD}Omarchy Mac Setup${NC}"
+    echo -e "${BOLD}Omarchy Mac Fedora Setup${NC}"
     echo -e "Downloading the repository to your system...\n"
     
     # Pre-flight checks

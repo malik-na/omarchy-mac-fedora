@@ -29,7 +29,7 @@ trap 'printf "$ANSI_SHOW_CURSOR"; sudo -k; kill ${SUDO_KEEPALIVE_PID:-} 2>/dev/n
 printf "$ANSI_HIDE_CURSOR"
 
 # Validate sudo access and refresh timestamp at the start
-echo "🔐 Omarchy Mac Installation requires administrator access..."
+echo "🔐 Omarchy Mac Fedora installation requires administrator access..."
 if ! sudo -v; then
   printf "$ANSI_SHOW_CURSOR"
   echo "❌ Error: sudo access required. Please run with proper permissions."
@@ -68,8 +68,8 @@ export MAKEFLAGS="-s"
 if [[ ! -d "$OMARCHY_INSTALL" ]]; then
   echo "❌ Error: $OMARCHY_INSTALL not found."
   echo "This installer must be run from a cloned Omarchy repo in $OMARCHY_PATH."
-  echo "Recommended:" 
-  echo "  wget -qO- https://malik-na.github.io/omarchy-mac/boot.sh | bash"
+  echo "Recommended:"
+  echo "  wget -qO- https://malik-na.github.io/omarchy-mac-fedora/boot.sh | bash"
   exit 1
 fi
 

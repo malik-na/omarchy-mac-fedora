@@ -1,12 +1,12 @@
 # Omarchy Mac Fedora (Fedora Asahi Remix)
 
-A concise, beginner-friendly guide to install Omarchy Mac on **Fedora Asahi Remix (aarch64)** for Apple Silicon Macs.
+A concise, beginner-friendly guide to install Omarchy Mac Fedora on **Fedora Asahi Remix (aarch64)** for Apple Silicon Macs.
 
 _This project is not intended for x86_64 systems, non-Asahi Fedora installs, or virtual machines._
 
-**Important:** Fedora Asahi Minimal first boot lands in a TTY setup flow. You must complete all prompts there before running Omarchy Mac installer steps.
+**Important:** Fedora Asahi Minimal first boot lands in a TTY setup flow. You must complete all prompts there before running Omarchy Mac Fedora installer steps.
 
-[![License](https://img.shields.io/github/license/malik-na/omarchy-mac)](LICENSE) [![Stars](https://img.shields.io/github/stars/malik-na/omarchy-mac?style=social)](https://github.com/malik-na/omarchy-mac/stargazers)
+[![License](https://img.shields.io/github/license/malik-na/omarchy-mac-fedora)](LICENSE) [![Stars](https://img.shields.io/github/stars/malik-na/omarchy-mac-fedora?style=social)](https://github.com/malik-na/omarchy-mac-fedora/stargazers)
 
 ---
 
@@ -14,7 +14,7 @@ _This project is not intended for x86_64 systems, non-Asahi Fedora installs, or 
 
 - Fedora Asahi device support: https://asahilinux.org/fedora/#device-support
 - Omarchy Mac Discord: https://discord.gg/KNQRk7dMzy
-- External monitor discussion: https://github.com/malik-na/omarchy-mac/discussions/73
+- External monitor discussion: https://github.com/malik-na/omarchy-mac-fedora/discussions/73
 - Support the project: https://buymeacoffee.com/malik2015no
 
 ---
@@ -106,7 +106,7 @@ From your Fedora Asahi user session:
 
 ```bash
 sudo dnf install git
-git clone https://github.com/malik-na/omarchy-mac.git ~/.local/share/omarchy
+git clone https://github.com/malik-na/omarchy-mac-fedora.git ~/.local/share/omarchy
 cd ~/.local/share/omarchy
 git checkout fedora
 bash install.sh
@@ -143,7 +143,7 @@ sudo setfont ter-v22n
 As your regular sudo user:
 
 ```bash
-git clone https://github.com/malik-na/omarchy-mac.git ~/.local/share/omarchy
+git clone https://github.com/malik-na/omarchy-mac-fedora.git ~/.local/share/omarchy
 cd ~/.local/share/omarchy
 git checkout fedora
 bash install.sh
@@ -208,7 +208,7 @@ Need help or want to share your setup?
 
 - Fedora Asahi device support: https://asahilinux.org/fedora/#device-support
 - Asahi Linux project: https://asahilinux.org/
-- External monitor discussion: https://github.com/malik-na/omarchy-mac/discussions/73
+- External monitor discussion: https://github.com/malik-na/omarchy-mac-fedora/discussions/73
 
 ---
 
@@ -224,4 +224,4 @@ If this project helped you, please star the repository and share feedback in iss
 
 See the full contributors list here:
 
-https://github.com/malik-na/omarchy-mac/graphs/contributors
+https://github.com/malik-na/omarchy-mac-fedora/graphs/contributors
