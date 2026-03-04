@@ -10,7 +10,7 @@ elif rpm -q kernel-16k-core >/dev/null 2>&1; then
   kernel_pkg="kernel-16k-core"
 fi
 
-if [ -n "$kernel_pkg" ]; then
+if [[ -n $kernel_pkg ]]; then
   kernel_after=$(rpm -q --qf '%{VERSION}-%{RELEASE}.%{ARCH}\n' "$kernel_pkg" 2>/dev/null | sort -V | tail -1)
 else
   kernel_after=""
@@ -18,8 +18,9 @@ fi
 
 rm -f /tmp/omarchy-kernel-before
 
-if [ -n "$kernel_before" ] && [ "$kernel_before" != "$kernel_after" ]; then
+if [[ -n $kernel_before && $kernel_before != $kernel_after ]]; then
   gum confirm "Linux kernel has been updated. Reboot?" && omarchy-state clear re*-required && sudo reboot now
+fi
 
 if [[ ! -d /usr/lib/modules/$(uname -r) ]]; then
   gum confirm "Linux kernel has been updated. Reboot?" && omarchy-system-reboot

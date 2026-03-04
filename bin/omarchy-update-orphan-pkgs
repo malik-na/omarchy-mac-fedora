@@ -1,5 +1,9 @@
 #!/bin/bash
 
+if omarchy-cmd-missing pacman; then
+  exit 0
+fi
+
 orphans=$(pacman -Qtdq || true)
 if [[ -n $orphans ]]; then
   echo -e "\e[32m\nRemove orphan system packages\e[0m"
