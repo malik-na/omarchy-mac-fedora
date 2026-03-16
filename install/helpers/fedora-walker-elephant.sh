@@ -223,6 +223,8 @@ BUILD_DEPS=(
   make
   cmake
   pkgconf-pkg-config
+  cairo-devel
+  poppler-glib-devel
   glib2-devel
   gtk4-devel
   gtk-layer-shell-devel
