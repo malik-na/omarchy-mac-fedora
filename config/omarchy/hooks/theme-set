@@ -2,13 +2,31 @@
 
 set -euo pipefail
 
-count=$(pgrep -xc waybar || true)
-
-if (( count > 1 )); then
-  pkill -x waybar || true
+launch_waybar_once() {
   if command -v uwsm-app >/dev/null 2>&1; then
     setsid uwsm-app -- waybar >/dev/null 2>&1 &
   else
     setsid waybar >/dev/null 2>&1 &
   fi
+}
+
+# Waybar can briefly respawn during a theme switch; sample for a short window
+# before deciding whether we need to deduplicate.
+for _ in {1..12}; do
+  count=$(pgrep -xc waybar || true)
+
+  if (( count > 1 )); then
+    pkill -x waybar || true
+    sleep 0.1
+    launch_waybar_once
+    exit 0
+  fi
+
+  sleep 0.2
+done
+
+# Safety: if no waybar is running after theme switch, bring one back.
+count=$(pgrep -xc waybar || true)
+if (( count == 0 )); then
+  launch_waybar_once
 fi
