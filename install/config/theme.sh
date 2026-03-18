@@ -13,12 +13,6 @@ mkdir -p ~/.config/omarchy/themes
 # Set initial theme
 omarchy-theme-set "Tokyo Night"
 
-# Safety: ensure hyprland.conf exists so Hyprland's source directive never
-# gets a "no match" on first boot even if theme-set had a partial failure.
-mkdir -p ~/.config/omarchy/current/theme
-[[ -f ~/.config/omarchy/current/theme/hyprland.conf ]] || \
-  touch ~/.config/omarchy/current/theme/hyprland.conf
-
 # Force GNOME defaults for Fedora installs
 if command -v gsettings >/dev/null 2>&1; then
   gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark' >/dev/null 2>&1 || true
