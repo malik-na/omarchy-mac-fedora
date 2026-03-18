@@ -11,16 +11,14 @@ fi
 
 
 ensure_local_bin_path() {
+  local path_before=":$PATH:"
   mkdir -p "$HOME/.local/bin"
   export PATH="$HOME/.local/bin:$PATH"
-  case ":$PATH:" in
-  *":$HOME/.local/bin:"*) ;;
-  *)
+  if [[ "$path_before" != *":$HOME/.local/bin:"* ]]; then
     if [[ -f "$HOME/.bashrc" ]] && ! grep -q 'PATH="$HOME/.local/bin:$PATH"' "$HOME/.bashrc"; then
       echo 'export PATH="$HOME/.local/bin:$PATH"' >>"$HOME/.bashrc"
     fi
-    ;;
-  esac
+  fi
 }
 
 

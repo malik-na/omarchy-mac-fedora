@@ -5,7 +5,14 @@ pkill elephant || true
 if command -v elephant >/dev/null 2>&1; then
   elephant service enable || true
 
+  OMARCHY_RUNTIME_PATH="${OMARCHY_PATH:-$HOME/.local/share/omarchy}"
+
   mkdir -p ~/.config/systemd/user/elephant.service.d
+
+  cat > ~/.config/systemd/user/elephant.service.d/10-omarchy-path.conf <<EOF
+[Service]
+Environment=OMARCHY_PATH=$OMARCHY_RUNTIME_PATH
+EOF
 
   cat > ~/.config/systemd/user/elephant.service.d/20-exec.conf <<EOF
 [Service]
@@ -15,7 +22,7 @@ EOF
 
   cat > ~/.config/systemd/user/elephant.service.d/30-path.conf <<EOF
 [Service]
-Environment=PATH=$HOME/.local/bin:/usr/local/bin:/usr/bin:/bin
+Environment=PATH=$OMARCHY_RUNTIME_PATH/bin:$HOME/.local/bin:/usr/local/bin:/usr/bin:/bin
 EOF
 
   systemctl --user daemon-reload
