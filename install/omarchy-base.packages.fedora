@@ -21,6 +21,11 @@ xdg-desktop-portal-gtk
 xdg-user-dirs
 qt5-qtwayland
 chromium
+yaru-icon-theme
+yaru-gtk2-theme
+yaru-gtk3-theme
+yaru-gtk4-theme
+yaru-gtksourceview-theme
 
 # Terminal
 xdg-terminal-exec
