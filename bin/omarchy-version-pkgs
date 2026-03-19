@@ -1,9 +1,21 @@
 #!/bin/bash
 
-last_transaction=$(dnf history list --reverse 2>/dev/null | awk 'NR>2 && $1 ~ /^[0-9]+$/ {print; exit}')
+latest_transaction_id=$(dnf history list 2>/dev/null | awk 'NR > 1 && $1 ~ /^[0-9]+$/ { print $1; exit }')
 
-if [[ -n "$last_transaction" ]]; then
-  echo "$last_transaction"
+if [[ -n "$latest_transaction_id" ]]; then
+  transaction_info=$(dnf history info "$latest_transaction_id" 2>/dev/null)
+  transaction_description=$(printf '%s\n' "$transaction_info" | awk '/^Description[[:space:]]*:/ { sub(/^[^:]+:[[:space:]]*/, "", $0); print; exit }')
+  transaction_time=$(printf '%s\n' "$transaction_info" | awk '/^Begin time[[:space:]]*:/ { sub(/^[^:]+:[[:space:]]*/, "", $0); print; exit }')
+
+  if [[ -n "$transaction_description" && -n "$transaction_time" ]]; then
+    if (( ${#transaction_description} > 18 )); then
+      transaction_description="${transaction_description:0:15}..."
+    fi
+
+    printf '#%s %s (%s)\n' "$latest_transaction_id" "$transaction_description" "$transaction_time"
+  else
+    echo "$latest_transaction_id"
+  fi
 else
-  echo "No DNF transaction history found"
+  echo "No DNF history"
 fi
