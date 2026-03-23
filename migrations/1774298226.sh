@@ -1,2 +1,2 @@
-echo "Restart walker to reload updated theme CSS (fixes theme preview height in migration)"
+echo "Restart walker service after binary update"
 omarchy-restart-walker || true
