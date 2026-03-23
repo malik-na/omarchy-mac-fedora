@@ -14,9 +14,9 @@ fi
 
 OMARCHY_PATH="${OMARCHY_PATH:-$HOME/.local/share/omarchy}"
 
-if [[ ! -x /etc/grub.d/41_snapshots-btrfs ]]; then
-  bash "$OMARCHY_PATH/install/helpers/fedora-grub-btrfs.sh" || true
-fi
+# Always run to ensure Fedora-specific config is applied even if grub-btrfs was
+# previously installed without correct paths (GRUB_BTRFS_GRUB_DIRNAME etc.)
+bash "$OMARCHY_PATH/install/helpers/fedora-grub-btrfs.sh" || true
 
 if [[ ! -x /etc/grub.d/41_snapshots-btrfs ]]; then
   exit 0
