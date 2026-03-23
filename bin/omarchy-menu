@@ -210,11 +210,11 @@ show_style_menu() {
 }
 
 show_theme_menu() {
-  omarchy-launch-walker -m menus:omarchythemes --width 800 --minheight 400
+  omarchy-launch-walker -m menus:omarchythemes --width 800 --minheight 400 --maxheight 600
 }
 
 show_background_menu() {
-  omarchy-launch-walker -m menus:omarchyBackgroundSelector --width 800 --minheight 400
+  omarchy-launch-walker -m menus:omarchyBackgroundSelector --width 800 --minheight 400 --maxheight 600
 }
 
 show_font_menu() {

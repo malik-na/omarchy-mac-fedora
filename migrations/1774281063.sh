@@ -11,7 +11,7 @@ if [[ -f $BINDINGS_CONF ]]; then
   sed -i '/SUPER, SPACE.*exec/d' "$BINDINGS_CONF"
 
   # SUPER ALT+SPACE (was: omarchy-menu in old template, now only in utilities.conf)
-  sed -i '/SUPER ALT, SPACE.*exec.*omarchy-menu[^-]/d' "$BINDINGS_CONF"
+  sed -i '/SUPER ALT, SPACE.*exec/d' "$BINDINGS_CONF"
 
   # SUPER CTRL+SPACE (was: omarchy-theme-bg-next, now omarchy-menu background in utilities.conf)
   sed -i '/SUPER CTRL, SPACE.*exec/d' "$BINDINGS_CONF"
