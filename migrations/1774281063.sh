@@ -2,24 +2,20 @@ echo "Remove stale key binding overrides from user bindings.conf"
 
 BINDINGS_CONF="$HOME/.config/hypr/bindings.conf"
 
-# The correct bindings live in utilities.conf (sourced before bindings.conf).
-# Any stale exec line in bindings.conf overrides them; remove the stale ones.
+# These bindings were previously shipped in the install template (config/hypr/bindings.conf)
+# but now live exclusively in utilities.conf. Any copies in bindings.conf cause
+# duplicate binds that override or conflict with the correct utilities.conf version.
+# Remove them unconditionally — users who want to customise these can re-add them.
 if [[ -f $BINDINGS_CONF ]]; then
-  # SUPER+SPACE: fuzzel → omarchy-launch-walker
-  if grep -q "SUPER, SPACE.*exec" "$BINDINGS_CONF" && \
-     ! grep -q "SUPER, SPACE.*exec.*omarchy-launch-walker" "$BINDINGS_CONF"; then
-    sed -i '/SUPER, SPACE.*exec/d' "$BINDINGS_CONF"
-  fi
+  # SUPER+SPACE (was: omarchy-launch-walker in old template, now only in utilities.conf)
+  sed -i '/SUPER, SPACE.*exec/d' "$BINDINGS_CONF"
 
-  # SUPER CTRL+SPACE: omarchy-theme-bg-next → omarchy-menu background
-  if grep -q "SUPER CTRL, SPACE.*exec" "$BINDINGS_CONF" && \
-     ! grep -q "SUPER CTRL, SPACE.*exec.*omarchy-menu background" "$BINDINGS_CONF"; then
-    sed -i '/SUPER CTRL, SPACE.*exec/d' "$BINDINGS_CONF"
-  fi
+  # SUPER ALT+SPACE (was: omarchy-menu in old template, now only in utilities.conf)
+  sed -i '/SUPER ALT, SPACE.*exec.*omarchy-menu[^-]/d' "$BINDINGS_CONF"
 
-  # SUPER CTRL+E: omarchy-emoji-picker → omarchy-launch-walker -m symbols
-  if grep -q "SUPER CTRL, E.*exec" "$BINDINGS_CONF" && \
-     ! grep -q "SUPER CTRL, E.*exec.*omarchy-launch-walker" "$BINDINGS_CONF"; then
-    sed -i '/SUPER CTRL, E.*exec/d' "$BINDINGS_CONF"
-  fi
+  # SUPER CTRL+SPACE (was: omarchy-theme-bg-next, now omarchy-menu background in utilities.conf)
+  sed -i '/SUPER CTRL, SPACE.*exec/d' "$BINDINGS_CONF"
+
+  # SUPER CTRL+E (was: omarchy-emoji-picker, now omarchy-launch-walker -m symbols in utilities.conf)
+  sed -i '/SUPER CTRL, E.*exec/d' "$BINDINGS_CONF"
 fi
