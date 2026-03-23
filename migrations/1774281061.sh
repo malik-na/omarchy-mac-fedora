@@ -1,14 +1,24 @@
-echo "Enable grub-btrfs snapshot entries in GRUB on Fedora Btrfs systems"
+echo "Install grub-btrfs from source and enable snapshot entries in GRUB on Fedora Btrfs systems"
 
 if omarchy-cmd-missing grub2-mkconfig; then
   exit 0
 fi
 
-if [[ ! -x /etc/grub.d/41_snapshots-btrfs ]]; then
+if [[ "$(findmnt -no FSTYPE / 2>/dev/null)" != "btrfs" ]]; then
   exit 0
 fi
 
 if omarchy-cmd-missing snapper; then
+  exit 0
+fi
+
+OMARCHY_PATH="${OMARCHY_PATH:-$HOME/.local/share/omarchy}"
+
+if [[ ! -x /etc/grub.d/41_snapshots-btrfs ]]; then
+  bash "$OMARCHY_PATH/install/helpers/fedora-grub-btrfs.sh" || true
+fi
+
+if [[ ! -x /etc/grub.d/41_snapshots-btrfs ]]; then
   exit 0
 fi
 
