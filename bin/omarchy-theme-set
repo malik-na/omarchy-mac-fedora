@@ -48,7 +48,6 @@ reload_waybar_theme() {
 
 # Restart components to apply new theme
 reload_waybar_theme
-omarchy-restart-walker
 omarchy-restart-swayosd
 omarchy-restart-terminal
 omarchy-restart-hyprctl
