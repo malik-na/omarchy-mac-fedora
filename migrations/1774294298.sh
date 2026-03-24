@@ -17,7 +17,10 @@ if omarchy-cmd-missing snapper; then
 fi
 
 OMARCHY_PATH="${OMARCHY_PATH:-$HOME/.local/share/omarchy}"
-bash "$OMARCHY_PATH/install/helpers/fedora-grub-btrfs.sh" || true
+if ! bash "$OMARCHY_PATH/install/helpers/fedora-grub-btrfs.sh"; then
+  echo "grub-btrfs install failed — retry omarchy-update from a desktop terminal with sudo access"
+  exit 1
+fi
 
 if [[ ! -x /etc/grub.d/41_snapshots-btrfs ]]; then
   exit 0

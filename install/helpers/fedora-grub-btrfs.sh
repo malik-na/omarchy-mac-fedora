@@ -7,6 +7,12 @@ if ! is_fedora; then
   exit 0
 fi
 
+# Skip if already installed
+if [[ -x /etc/grub.d/41_snapshots-btrfs ]]; then
+  echo "[OK] grub-btrfs already installed, skipping"
+  exit 0
+fi
+
 if ! command -v git >/dev/null 2>&1; then
   echo "[INFO] Installing git for grub-btrfs build"
   sudo dnf install -y git || {
