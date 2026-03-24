@@ -12,5 +12,8 @@ launch_waybar_once() {
 
 # Safety: if no waybar is running after a theme switch, bring one back.
 if ! pgrep -x waybar >/dev/null; then
-  launch_waybar_once
+  sleep 1
+  if ! pgrep -x waybar >/dev/null; then
+    launch_waybar_once
+  fi
 fi
