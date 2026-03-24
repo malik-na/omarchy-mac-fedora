@@ -38,16 +38,10 @@ echo "$THEME_NAME" >"$HOME/.config/omarchy/current/theme.name"
 # Change background with theme
 omarchy-theme-bg-next
 
-# Waybar can reload config and CSS in-place, which avoids UWSM restart races
-# during theme switches.
-reload_waybar_theme() {
-  if pgrep -x waybar >/dev/null; then
-    pkill -SIGUSR2 -x waybar || omarchy-restart-waybar
-  fi
-}
-
 # Restart components to apply new theme
-reload_waybar_theme
+if pgrep -x waybar >/dev/null; then
+  omarchy-restart-waybar
+fi
 omarchy-restart-swayosd
 omarchy-restart-terminal
 omarchy-restart-hyprctl
