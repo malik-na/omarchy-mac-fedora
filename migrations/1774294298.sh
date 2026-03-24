@@ -22,7 +22,7 @@ if ! bash "$OMARCHY_PATH/install/helpers/fedora-grub-btrfs.sh"; then
   exit 1
 fi
 
-if [[ ! -x /etc/grub.d/41_snapshots-btrfs ]]; then
+if ! sudo test -x /etc/grub.d/41_snapshots-btrfs 2>/dev/null; then
   exit 0
 fi
 

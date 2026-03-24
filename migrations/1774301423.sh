@@ -13,7 +13,7 @@ if omarchy-cmd-missing snapper; then
 fi
 
 # Install grub-btrfs if missing (in case previous migration failed)
-if [[ ! -x /etc/grub.d/41_snapshots-btrfs ]]; then
+if ! sudo test -x /etc/grub.d/41_snapshots-btrfs 2>/dev/null; then
   OMARCHY_PATH="${OMARCHY_PATH:-$HOME/.local/share/omarchy}"
   if ! bash "$OMARCHY_PATH/install/helpers/fedora-grub-btrfs.sh"; then
     echo "grub-btrfs install failed — retry omarchy-update from a desktop terminal with sudo access"
@@ -21,7 +21,7 @@ if [[ ! -x /etc/grub.d/41_snapshots-btrfs ]]; then
   fi
 fi
 
-if [[ ! -x /etc/grub.d/41_snapshots-btrfs ]]; then
+if ! sudo test -x /etc/grub.d/41_snapshots-btrfs 2>/dev/null; then
   exit 0
 fi
 
