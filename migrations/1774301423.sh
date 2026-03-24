@@ -1,4 +1,4 @@
-echo "Regenerate GRUB snapshot entries if grub-btrfs is installed but entries are missing"
+echo "Ensure grub-btrfs is installed and GRUB snapshot entries are generated"
 
 if omarchy-cmd-missing grub2-mkconfig; then
   exit 0
@@ -8,11 +8,20 @@ if [[ "$(findmnt -no FSTYPE / 2>/dev/null)" != "btrfs" ]]; then
   exit 0
 fi
 
-if [[ ! -x /etc/grub.d/41_snapshots-btrfs ]]; then
+if omarchy-cmd-missing snapper; then
   exit 0
 fi
 
-if omarchy-cmd-missing snapper; then
+# Install grub-btrfs if missing (in case previous migration failed)
+if [[ ! -x /etc/grub.d/41_snapshots-btrfs ]]; then
+  OMARCHY_PATH="${OMARCHY_PATH:-$HOME/.local/share/omarchy}"
+  if ! bash "$OMARCHY_PATH/install/helpers/fedora-grub-btrfs.sh"; then
+    echo "grub-btrfs install failed — retry omarchy-update from a desktop terminal with sudo access"
+    exit 1
+  fi
+fi
+
+if [[ ! -x /etc/grub.d/41_snapshots-btrfs ]]; then
   exit 0
 fi
 
