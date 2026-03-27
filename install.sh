@@ -3,12 +3,19 @@
 # Exit immediately if a command exits with a non-zero status
 #set -eEo pipefail
 
-
 # Terminal control codes
 export ANSI_HIDE_CURSOR="\033[?25l"
 export ANSI_SHOW_CURSOR="\033[?25h"
 export ANSI_CLEAR_SCREEN="\033[2J\033[H"
+export OMARCHY_DRY_RUN_ENABLED="${OMARCHY_DRY_RUN:-0}"
 
+cleanup_install() {
+  printf "$ANSI_SHOW_CURSOR"
+  if [[ "$OMARCHY_DRY_RUN_ENABLED" != "1" ]]; then
+    sudo -k
+  fi
+  kill ${SUDO_KEEPALIVE_PID:-} 2>/dev/null || true
+}
 
 # Distro detection abstraction (must be early)
 source "${OMARCHY_INSTALL:-$HOME/.local/share/omarchy/install}/helpers/distro.sh"
@@ -19,21 +26,30 @@ if [[ "$OMARCHY_DISTRO" != "fedora" ]]; then
 fi
 
 source "${OMARCHY_INSTALL:-$HOME/.local/share/omarchy/install}/helpers/packages-fedora.sh"
+
 # Install gum early - it's needed for the installation UI
-bash "${OMARCHY_INSTALL:-$HOME/.local/share/omarchy/install}/helpers/fedora-gum.sh"
+if [[ "$OMARCHY_DRY_RUN_ENABLED" == "1" ]]; then
+  echo "[DRY-RUN] Would run: bash ${OMARCHY_INSTALL:-$HOME/.local/share/omarchy/install}/helpers/fedora-gum.sh"
+else
+  bash "${OMARCHY_INSTALL:-$HOME/.local/share/omarchy/install}/helpers/fedora-gum.sh"
+fi
 
 # Show cursor on exit (cleanup trap to prevent ghosting)
-trap 'printf "$ANSI_SHOW_CURSOR"; sudo -k; kill ${SUDO_KEEPALIVE_PID:-} 2>/dev/null' EXIT INT TERM
+trap cleanup_install EXIT INT TERM
 
 # Hide cursor during installation for cleaner display
 printf "$ANSI_HIDE_CURSOR"
 
 # Validate sudo access and refresh timestamp at the start
 echo "🔐 Omarchy Mac Fedora installation requires administrator access..."
-if ! sudo -v; then
-  printf "$ANSI_SHOW_CURSOR"
-  echo "❌ Error: sudo access required. Please run with proper permissions."
-  exit 1
+if [[ "$OMARCHY_DRY_RUN_ENABLED" == "1" ]]; then
+  echo "[DRY-RUN] Skipping sudo credential validation"
+else
+  if ! sudo -v; then
+    printf "$ANSI_SHOW_CURSOR"
+    echo "❌ Error: sudo access required. Please run with proper permissions."
+    exit 1
+  fi
 fi
 
 # Keep sudo alive throughout installation to prevent password re-prompts
@@ -44,16 +60,22 @@ keep_sudo_alive() {
   done
 }
 
-keep_sudo_alive &
-SUDO_KEEPALIVE_PID=$!
+if [[ "$OMARCHY_DRY_RUN_ENABLED" != "1" ]]; then
+  keep_sudo_alive &
+  SUDO_KEEPALIVE_PID=$!
+fi
 
 # Clear any lingering password prompts from display (fixes ghosting)
 printf "$ANSI_CLEAR_SCREEN"
 
 # Define Omarchy locations
-export OMARCHY_PATH="$HOME/.local/share/omarchy"
-export OMARCHY_INSTALL="$OMARCHY_PATH/install"
-export OMARCHY_INSTALL_LOG_FILE="/var/log/omarchy-install.log"
+export OMARCHY_PATH="${OMARCHY_PATH:-$HOME/.local/share/omarchy}"
+export OMARCHY_INSTALL="${OMARCHY_INSTALL:-$OMARCHY_PATH/install}"
+if [[ "$OMARCHY_DRY_RUN_ENABLED" == "1" ]]; then
+  export OMARCHY_INSTALL_LOG_FILE="${OMARCHY_INSTALL_LOG_FILE:-/tmp/omarchy-install-dry-run.log}"
+else
+  export OMARCHY_INSTALL_LOG_FILE="${OMARCHY_INSTALL_LOG_FILE:-/var/log/omarchy-install.log}"
+fi
 export OMARCHY_BIN="$OMARCHY_PATH/bin"
 export PATH="$OMARCHY_PATH/bin:$PATH"
 

@@ -1,22 +1,7 @@
 #!/bin/bash
 stop_install_log
 
-# Check if tte (terminaltexteffects) is available
-if command -v tte &>/dev/null; then
-  echo_in_style() {
-    echo "$1" | tte --canvas-width 0 --anchor-text c --frame-rate 640 print
-  }
-
-  show_logo() {
-    if [[ -f ~/.local/share/omarchy/logo.txt ]]; then
-      tte -i ~/.local/share/omarchy/logo.txt --canvas-width 0 --anchor-text c --frame-rate 920 laseretch
-    elif [[ -f "$OMARCHY_PATH/logo.txt" ]]; then
-      tte -i "$OMARCHY_PATH/logo.txt" --canvas-width 0 --anchor-text c --frame-rate 920 laseretch
-    else
-      echo "  OMARCHY"
-    fi
-  }
-else
+if [[ ${OMARCHY_DRY_RUN:-0} == "1" ]]; then
   echo_in_style() {
     echo "$1"
   }
@@ -30,6 +15,37 @@ else
       echo "  OMARCHY"
     fi
   }
+else
+  # Check if tte (terminaltexteffects) is available
+  if command -v tte &>/dev/null; then
+    echo_in_style() {
+      echo "$1" | tte --canvas-width 0 --anchor-text c --frame-rate 640 print
+    }
+
+    show_logo() {
+      if [[ -f ~/.local/share/omarchy/logo.txt ]]; then
+        tte -i ~/.local/share/omarchy/logo.txt --canvas-width 0 --anchor-text c --frame-rate 920 laseretch
+      elif [[ -f "$OMARCHY_PATH/logo.txt" ]]; then
+        tte -i "$OMARCHY_PATH/logo.txt" --canvas-width 0 --anchor-text c --frame-rate 920 laseretch
+      else
+        echo "  OMARCHY"
+      fi
+    }
+  else
+    echo_in_style() {
+      echo "$1"
+    }
+
+    show_logo() {
+      if [[ -f ~/.local/share/omarchy/logo.txt ]]; then
+        cat ~/.local/share/omarchy/logo.txt
+      elif [[ -f "$OMARCHY_PATH/logo.txt" ]]; then
+        cat "$OMARCHY_PATH/logo.txt"
+      else
+        echo "  OMARCHY"
+      fi
+    }
+  fi
 fi
 
 clear

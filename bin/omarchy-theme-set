@@ -17,12 +17,6 @@ if [[ ! -d $OMARCHY_THEMES_PATH/$THEME_NAME ]] && [[ ! -d $USER_THEMES_PATH/$THE
   exit 1
 fi
 
-# Auto-generate fuzzel.ini if missing (for new themes) - Mac-specific feature
-if [[ ! -f "$THEME_PATH/fuzzel.ini" && -f "$THEME_PATH/walker.css" ]]; then
-  echo "Auto-generating fuzzel.ini for theme $THEME_NAME..."
-  omarchy-mac-custom-theme-utility
-fi
-
 # Setup clean next theme directory (for atomic theme config swapping)
 rm -rf "$NEXT_THEME_PATH"
 mkdir -p "$NEXT_THEME_PATH"
@@ -48,7 +42,6 @@ omarchy-theme-bg-next
 if pgrep -x waybar >/dev/null; then
   omarchy-restart-waybar
 fi
-omarchy-restart-walker # This handles fuzzel restart on Mac
 omarchy-restart-swayosd
 omarchy-restart-terminal
 omarchy-restart-hyprctl

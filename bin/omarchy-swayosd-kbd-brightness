@@ -10,6 +10,6 @@ progress="$(awk -v p="$percent" 'BEGIN{printf "%.2f", p/100}')"
 
 swayosd-client \
   --monitor "$(hyprctl monitors -j | jq -r '.[]|select(.focused==true).name')" \
-  --custom-icon keyboard-brightness \
+  --custom-icon input-keyboard-symbolic \
   --custom-progress "$progress" \
   --custom-progress-text "${percent}%"

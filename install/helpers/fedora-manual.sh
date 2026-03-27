@@ -127,9 +127,14 @@ if ! command -v wayfreeze &>/dev/null; then
   fi
 fi
 
-# 8. hyprland-guiutils (build from source)
+# 8. hyprland-guiutils
 if ! command -v hyprland-guiutils &>/dev/null; then
-  echo "[WARN] hyprland-guiutils not available in repos. Please build from source: https://github.com/hyprwm/hyprland-guiutils"
+  if dnf list --available hyprland-guiutils &>/dev/null; then
+    echo "Installing hyprland-guiutils (optional)..."
+    sudo dnf install -y hyprland-guiutils || echo "[WARN] Optional hyprland-guiutils install failed, continuing..."
+  else
+    echo "[WARN] hyprland-guiutils not available in repos. Please build from source: https://github.com/hyprwm/hyprland-guiutils"
+  fi
 fi
 
 echo "Fedora manual install steps complete."

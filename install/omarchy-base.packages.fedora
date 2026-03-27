@@ -7,8 +7,8 @@ hyprland-qt-support
 hypridle
 hyprlock
 hyprsunset
+hyprland-guiutils
 waybar
-fuzzel
 mako
 swayosd
 swaybg
@@ -22,6 +22,11 @@ xdg-desktop-portal-gtk
 xdg-user-dirs
 qt5-qtwayland
 chromium
+yaru-icon-theme
+yaru-gtk2-theme
+yaru-gtk3-theme
+yaru-gtk4-theme
+yaru-gtksourceview-theme
 
 # Terminal
 xdg-terminal-exec
@@ -73,6 +78,9 @@ gum
 plymouth
 cups
 snapper
+btrfs-assistant
+python3-dnf-plugin-snapper
+inotify-tools
 ImageMagick
 firewalld
 python3-pip
@@ -92,6 +100,7 @@ lxpolkit
 google-noto-fonts-common
 google-noto-sans-cjk-fonts
 google-noto-emoji-fonts
+google-noto-color-emoji-fonts
 cascadia-mono-nf-fonts
 jetbrains-mono-fonts
 

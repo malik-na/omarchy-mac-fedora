@@ -1,6 +1,5 @@
 #!/bin/bash
-# Emoji picker using fuzzel
-# Fallback to basic emoji list if no advanced picker is available
+# Emoji picker using walker dmenu frontend.
 
 # Basic emoji list - you can expand this or use a more comprehensive source
 EMOJIS="😀 😃 😄 😁 😆 😅 😂 🤣 😊 😇
@@ -29,8 +28,8 @@ EMOJIS="😀 😃 😄 😁 😆 😅 😂 🤣 😊 😇
 🚣 🏊 ⛹️ 🏋️ 🚴 🚵 🤸 🤼 🤽 🤾
 🤹 🧘 🛀 🛌 👭 👫 👬 💏 💑 👪"
 
-# Use fuzzel to display emoji selection
-selected_emoji=$(echo "$EMOJIS" | tr ' ' '\n' | fuzzel --dmenu --prompt="🔍 " --placeholder="Pick an emoji...")
+# Use walker to display emoji selection.
+selected_emoji=$(echo "$EMOJIS" | tr ' ' '\n' | omarchy-launch-walker --dmenu -p "Emoji" --width 420 --minheight 320)
 
 # Copy to clipboard if an emoji was selected
 if [ -n "$selected_emoji" ]; then

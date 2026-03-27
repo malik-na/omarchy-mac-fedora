@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 #
-#   Main menu refactored to use the fuzzel frontend. Full featured
-
+#   Main menu using walker frontend.
+#
 #   Made at and for omarchy-mac
 #   (Omarchi fork for AS Macs, link in the readme)
 #   For usage instead of walker, which
@@ -31,12 +31,12 @@ set -euo pipefail
 
 export PATH="$HOME/.local/share/omarchy/bin:$PATH"
 
-# ---- fuzzel-only launcher glue ------------------------------------------------
+# ---- walker launcher glue -----------------------------------------------------
 
-require_fuzzel() {
-  if ! command -v fuzzel >/dev/null 2>&1; then
-    notify-send "Omarchy menu" "Install fuzzel before use this utility. Try: sudo dnf install fuzzel"
-    echo "fuzzel not found; please install 'fuzzel'." >&2
+require_walker() {
+  if ! command -v walker >/dev/null 2>&1; then
+    notify-send "Omarchy menu" "Install walker before using this utility."
+    echo "walker not found; please install 'walker'." >&2
     exit 127
   fi
 }
@@ -49,7 +49,7 @@ menu() {
   local extra="${3:-}"
   local preselect="${4:-}"
 
-  require_fuzzel
+  require_walker
 
   # width options processing from $extra
   local width=""
@@ -73,20 +73,17 @@ menu() {
     fi
   fi
 
-  # Building fuzzel flags
-  # --dmenu — get from stdin and selected to stdout
-  # --prompt — request header
-  # --width - window's width (if empty, fuzzel would set default)
-  local args=(--dmenu --placeholder "Go...")
+  local args=(--dmenu -p "$prompt")
   if [[ -n "$width" ]]; then
     args+=(--width "$width")
   else
-    args+=(--width 20)
+    args+=(--width 295)
   fi
+  args+=(--minheight 1 --maxheight 630)
 
-  # Start. Fuzzel returns empty stroke on esc/cancel
+  # Walker returns empty string on esc/cancel
   local choice
-  choice="$(printf "%s\n" "$list" | fuzzel "${args[@]}" || true)"
+  choice="$(printf "%s\n" "$list" | omarchy-launch-walker "${args[@]}" || true)"
   printf "%s" "${choice:-CNCLD}"
 }
 
@@ -213,13 +210,7 @@ show_style_menu() {
 }
 
 show_theme_menu() {
-  local theme
-  theme="$(menu "Theme" "$(omarchy-theme-list)" "" "$(omarchy-theme-current)")"
-  if [[ "$theme" == "CNCLD" || -z "$theme" ]]; then
-    back_to show_style_menu
-  else
-    omarchy-theme-set "$theme"
-  fi
+  omarchy-launch-walker -m menus:omarchythemes --width 800 --minheight 400
 }
 
 show_background_menu() {
@@ -286,13 +277,12 @@ show_setup_power_menu() {
 }
 
 show_setup_config_menu() {
-  case "$(menu "Setup" $'  Hyprland\n  Hypridle\n  Hyprlock\n  Hyprsunset\n  Swayosd\n󰌧  Fuzzel\n󰍜  Waybar\n󰞅  XCompose')" in
+  case "$(menu "Setup" $'  Hyprland\n  Hypridle\n  Hyprlock\n  Hyprsunset\n  Swayosd\n󰍜  Waybar\n󰞅  XCompose')" in
   *Hyprland*) open_in_editor ~/.config/hypr/hyprland.conf ;;
   *Hypridle*) open_in_editor ~/.config/hypr/hypridle.conf && omarchy-restart-hypridle ;;
   *Hyprlock*) open_in_editor ~/.config/hypr/hyprlock.conf ;;
   *Hyprsunset*) open_in_editor ~/.config/hypr/hyprsunset.conf && omarchy-restart-hyprsunset ;;
   *Swayosd*) open_in_editor ~/.config/swayosd/config.toml && omarchy-restart-swayosd ;;
-  *Fuzzel*) open_in_editor ~/.config/fuzzel/fuzzel.ini && omarchy-restart-walker ;;
   *Waybar*) open_in_editor ~/.config/waybar/config.jsonc && omarchy-restart-waybar ;;
   *XCompose*) open_in_editor ~/.XCompose && omarchy-restart-xcompose ;;
   *) show_main_menu ;;
@@ -467,7 +457,7 @@ show_remove_menu() {
 }
 
 show_update_menu() {
-  case $(menu "Update" $' Omarchy\n󰔫  Channel\n  Config\n󰸌  Extra Themes\n  Process\n󰇅  Hardware\n  Firmware\n  Password\n  Timezone\n  Time') in
+  case $(menu "Update" $'󰚰  Omarchy\n󰔫  Channel\n  Config\n󰸌  Extra Themes\n󱁤  Process\n󰇅  Hardware\n󰏖  Firmware\n󰌾  Password\n󰥔  Timezone\n󰥔  Time') in
   *Omarchy*) present_terminal omarchy-update ;;
   *Channel*) show_update_channel_menu ;;
   *Config*) show_update_config_menu ;;
@@ -493,25 +483,25 @@ show_update_channel_menu() {
 }
 
 show_update_process_menu() {
-  case "$(menu "Restart" $'  Hypridle\n  Hyprsunset\n  Swayosd\n󰌧  Fuzzel\n󰍜  Waybar')" in
+  case "$(menu "Restart" $'  Hypridle\n  Hyprsunset\n  Swayosd\n󱁤  Launcher\n󰍜  Waybar')" in
   *Hypridle*) omarchy-restart-hypridle ;;
   *Hyprsunset*) omarchy-restart-hyprsunset ;;
   *Swayosd*) omarchy-restart-swayosd ;;
-  *Fuzzel*) omarchy-restart-walker ;;
+  *Launcher*) omarchy-restart-walker ;;
   *Waybar*) omarchy-restart-waybar ;;
   *) show_update_menu ;;
   esac
 }
 
 show_update_config_menu() {
-  case "$(menu "Use default config" $'  Hyprland\n  Hypridle\n  Hyprlock\n  Hyprsunset\n󱣴  Plymouth\n  Swayosd\n󰌧  Fuzzel\n󰍜  Waybar')" in
+  case "$(menu "Use default config" $'  Hyprland\n  Hypridle\n  Hyprlock\n  Hyprsunset\n󱣴  Plymouth\n  Swayosd\n󱁤  Walker\n󰍜  Waybar')" in
   *Hyprland*) present_terminal omarchy-refresh-hyprland ;;
   *Hypridle*) present_terminal omarchy-refresh-hypridle ;;
   *Hyprlock*) present_terminal omarchy-refresh-hyprlock ;;
   *Hyprsunset*) present_terminal omarchy-refresh-hyprsunset ;;
   *Plymouth*) present_terminal omarchy-refresh-plymouth ;;
   *Swayosd*) present_terminal omarchy-refresh-swayosd ;;
-  *Fuzzel*) present_terminal omarchy-refresh-walker ;;
+  *Walker*) present_terminal omarchy-refresh-walker ;;
   *Waybar*) present_terminal omarchy-refresh-waybar ;;
   *) show_update_menu ;;
   esac
@@ -539,10 +529,10 @@ show_about() {
 }
 
 show_system_menu() {
-  case $(menu "System" $'  Lock\n󱄄  Screensaver\n󰤄  Suspend\n󰜉  Restart\n󰐥  Shutdown') in
+  case $(menu "System" $'󰌾  Logout\n󰌾  Lock\n󱄄  Screensaver\n󰤄  Suspend\n󰜉  Restart\n󰐥  Shutdown') in
+  *Logout*) omarchy-system-logout ;;
   *Lock*) omarchy-lock-screen ;;
   *Screensaver*) omarchy-launch-screensaver force ;;
-  *Lock*) omarchy-lock-screen ;;
   *Suspend*) systemctl suspend ;;
   *Restart*) omarchy-cmd-reboot ;;
   *Shutdown*) omarchy-cmd-shutdown ;;
@@ -557,9 +547,7 @@ show_main_menu() {
 go_to_menu() {
   case "${1,,}" in
   *apps*)
-    # fuzzel catalog mode .desktop — ok, I lied, sorry, darling
-    require_fuzzel
-    fuzzel
+    omarchy-launch-walker -p "Launch..."
     ;;
   *learn*) show_learn_menu ;;
   *trigger*) show_trigger_menu ;;

@@ -1,8 +1,8 @@
 # Omarchy Mac Fedora (Fedora Asahi Remix)
 
-A concise, beginner-friendly guide to install Omarchy Mac Fedora on **Fedora Asahi Remix (aarch64)** for Apple Silicon Macs.
+A concise, beginner-friendly guide to install Omarchy Mac Fedora on **Fedora Asahi Remix (aarch64)** for Apple Silicon Macs M1/M2
 
-_This project is not intended for x86_64 systems, non-Asahi Fedora installs, or virtual machines._
+_This project is an extension of [Omarchy Mac](https://github.com/malik-na/omarchy-mac) project._
 
 **Important:** Fedora Asahi Minimal first boot lands in a TTY setup flow. You must complete all prompts there before running Omarchy Mac Fedora installer steps.
 
@@ -16,25 +16,6 @@ _This project is not intended for x86_64 systems, non-Asahi Fedora installs, or 
 - Omarchy Mac Discord: https://discord.gg/KNQRk7dMzy
 - External monitor discussion: https://github.com/malik-na/omarchy-mac-fedora/discussions/73
 - Support the project: https://buymeacoffee.com/malik2015no
-
----
-
-## Table of contents
-
-- [Before you begin](#before-you-begin)
-- [Connect to Wi-Fi before installation](#connect-to-wi-fi-before-installation)
-- [Quick start](#quick-start)
-- [Detailed installation](#detailed-installation)
-  - [Prepare Fedora Asahi Minimal](#prepare-fedora-asahi-minimal)
-  - [Install Omarchy Mac Fedora](#install-omarchy-mac-fedora)
-- [Post-install tasks](#post-install-tasks)
-- [Troubleshooting and FAQ](#troubleshooting-and-faq)
-- [Update and maintenance](#update-and-maintenance)
-- [Migrating from older Arch-based installs](#migrating-from-older-arch-based-installs)
-- [Support](#support)
-- [External resources](#external-resources)
-- [Acknowledgements](#acknowledgements)
-- [Contributors](#contributors)
 
 ---
 
@@ -74,12 +55,8 @@ Use one of these methods from your Fedora Asahi session before running the insta
 # Check network devices
 nmcli device status
 
-# Scan and list Wi-Fi networks (replace wlan0 if needed)
-nmcli device wifi rescan ifname wlan0
-nmcli device wifi list ifname wlan0
-
 # Connect to a network
-nmcli device wifi connect "SSID_NAME" password "PASSWORD" ifname wlan0
+nmcli device wifi connect "SSID_NAME" password "PASSWORD"
 ```
 
 ### Option 2: `iwctl` (iwd)
@@ -99,24 +76,6 @@ If `wlan0` does not exist on your system, replace it with your detected wireless
 Fedora Asahi Minimal normally includes the required first-boot setup prompts; use these commands only to ensure networking is ready before install.
 
 ---
-
-## Quick start
-
-From your Fedora Asahi user session:
-
-```bash
-sudo dnf install git
-git clone https://github.com/malik-na/omarchy-mac-fedora.git ~/.local/share/omarchy
-cd ~/.local/share/omarchy
-git checkout fedora
-bash install.sh
-```
-
-The installer enforces Fedora Asahi aarch64 in preflight checks.
-
----
-
-## Detailed installation
 
 ### Prepare Fedora Asahi Minimal (required)
 
@@ -143,9 +102,9 @@ sudo setfont ter-v22n
 As your regular sudo user:
 
 ```bash
+sudo dnf update
 git clone https://github.com/malik-na/omarchy-mac-fedora.git ~/.local/share/omarchy
 cd ~/.local/share/omarchy
-git checkout fedora
 bash install.sh
 ```
 
@@ -154,6 +113,7 @@ bash install.sh
 ## Post-install tasks
 
 - Reboot and log into your Hyprland session.
+- Press `Cmd + K`  to learn all the Keybindings. 
 - Validate core desktop behavior: app launcher opens, terminal keybind works, Wi-Fi/Bluetooth menus open, and lock screen works.
 
 ## Troubleshooting and FAQ
@@ -161,13 +121,6 @@ bash install.sh
 ### Installer refuses to continue
 
 The installer currently supports **Fedora Asahi Remix on aarch64 only**. Verify distro/architecture and rerun.
-
-### Wi-Fi or Bluetooth tools are missing
-
-Omarchy launchers use Fedora-friendly fallbacks:
-
-- Wi-Fi: `impala` -> `nm-connection-editor` -> `nmtui` -> `nmcli` -> `iwctl`
-- Bluetooth: `bluetui` -> `blueman-manager` -> `bluetoothctl`
 
 ### Session launches but keybinds fail
 
@@ -184,7 +137,7 @@ For implementation and runtime hardening details, see `FEDORA_ASAHI_PORTING_PLAN
 
 ## Update and maintenance
 
-- `omarchy-update` updates both the Omarchy repository and Fedora system packages (`dnf upgrade --refresh`).
+- `Menu > Update > Omarchy` updates both the Omarchy repository and Fedora system packages (`dnf upgrade --refresh`).
 - Waybar update indicators track git divergence from your configured upstream branch.
 
 Check branch/upstream state:
@@ -200,7 +153,7 @@ git -C ~/.local/share/omarchy status -sb
 Need help or want to share your setup?
 
 - Discord: https://discord.gg/KNQRk7dMzy
-- Support: https://buymeacoffee.com/malik2015no
+- Support the project: [![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-FFDD00?style=for-the-badge&logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/malik2015no)
 
 ---
 
@@ -214,14 +167,9 @@ Need help or want to share your setup?
 
 ## Acknowledgements
 
-Thanks to the Asahi Linux community and DHH for Omarchy.
+Thanks to the Asahi Linux community for making Linux  by possible on Macs and thanks to DHH for Omarchy.
 
-If this project helped you, please star the repository and share feedback in issues/discussions.
+If this project helped you, please star the repository and share feedback on X by tagging [@tiredkebab](https://x.com/tiredkebab).
 
 ---
 
-## Contributors
-
-See the full contributors list here:
-
-https://github.com/malik-na/omarchy-mac-fedora/graphs/contributors

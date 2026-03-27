@@ -2,13 +2,18 @@
 
 set -euo pipefail
 
-count=$(pgrep -xc waybar || true)
-
-if (( count > 1 )); then
-  pkill -x waybar || true
+launch_waybar_once() {
   if command -v uwsm-app >/dev/null 2>&1; then
     setsid uwsm-app -- waybar >/dev/null 2>&1 &
   else
     setsid waybar >/dev/null 2>&1 &
+  fi
+}
+
+# Safety: if no waybar is running after a theme switch, bring one back.
+if ! pgrep -x waybar >/dev/null; then
+  sleep 1
+  if ! pgrep -x waybar >/dev/null; then
+    launch_waybar_once
   fi
 fi

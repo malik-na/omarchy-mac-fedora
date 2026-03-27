@@ -54,8 +54,13 @@ stop_log_output() {
 }
 
 start_install_log() {
-  sudo touch "$OMARCHY_INSTALL_LOG_FILE"
-  sudo chmod 666 "$OMARCHY_INSTALL_LOG_FILE"
+  if [[ ${OMARCHY_DRY_RUN:-0} == "1" ]]; then
+    touch "$OMARCHY_INSTALL_LOG_FILE"
+    chmod 666 "$OMARCHY_INSTALL_LOG_FILE"
+  else
+    sudo touch "$OMARCHY_INSTALL_LOG_FILE"
+    sudo chmod 666 "$OMARCHY_INSTALL_LOG_FILE"
+  fi
 
   export OMARCHY_START_TIME=$(date '+%Y-%m-%d %H:%M:%S')
 
@@ -123,7 +128,11 @@ run_logged() {
   echo "[$(date '+%Y-%m-%d %H:%M:%S')] Starting: $script" >>"$OMARCHY_INSTALL_LOG_FILE"
 
   # Use bash -c to create a clean subshell
-  bash -c "source '$script'" </dev/null >>"$OMARCHY_INSTALL_LOG_FILE" 2>&1
+  if [[ ${OMARCHY_DRY_RUN:-0} == "1" ]]; then
+    bash -c "set -x; source '$OMARCHY_INSTALL/helpers/dry-run.sh'; source '$script'" </dev/null >>"$OMARCHY_INSTALL_LOG_FILE" 2>&1
+  else
+    bash -c "source '$script'" </dev/null >>"$OMARCHY_INSTALL_LOG_FILE" 2>&1
+  fi
 
   local exit_code=$?
 

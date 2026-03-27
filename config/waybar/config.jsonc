@@ -1,5 +1,4 @@
 {
-  "reload_style_on_change": true,
   "layer": "top",
   "position": "top",
   "spacing": 0,
@@ -113,7 +112,7 @@
     "on-click-right": "pamixer -t",
     "tooltip-format": "Playing at {volume}%",
     "scroll-step": 5,
-    "format-muted": "",
+    "format-muted": "󰖁",
     "format-icons": {
       "headphone": "",
       "headset": "",

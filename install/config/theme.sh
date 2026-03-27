@@ -32,13 +32,6 @@ ln -snf ~/.config/omarchy/current/theme/mako.ini ~/.config/mako/config
 mkdir -p ~/.config/eza
 ln -snf ~/.config/omarchy/current/theme/eza.yml ~/.config/eza/theme.yml
 
-# Setup fuzzel theming (similar to other app configs)
-mkdir -p ~/.config/fuzzel
-cp -n ~/.local/share/omarchy/config/fuzzel/fuzzel.ini ~/.config/fuzzel/fuzzel.ini
-
-# Ensure all themes have fuzzel.ini files
-~/.local/share/omarchy/bin/omarchy-mac-custom-theme-utility
-
 # Add managed policy directories for browsers for theme changes
 for dir in /etc/chromium/policies/managed /etc/chromium-browser/policies/managed /etc/brave/policies/managed /etc/opt/chrome/policies/managed /etc/opt/edge/policies/managed; do
   sudo mkdir -p "$dir"

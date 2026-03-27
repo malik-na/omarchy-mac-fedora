@@ -81,7 +81,9 @@ function GetEntries()
             Preview = preview_path,
             PreviewType = "file",
             Actions = {
-              activate = "omarchy-theme-set " .. theme_name,
+              -- Run in a new systemd scope so restarting elephant/walker
+              -- mid-execution does not kill this script before it completes.
+              activate = "systemd-run --user --scope -- omarchy-theme-set " .. theme_name,
             },
           })
         end

@@ -6,4 +6,5 @@ if ! command -v elephant >/dev/null 2>&1; then
 fi
 
 elephant service enable
+systemctl --user daemon-reload
 systemctl --user start elephant.service
