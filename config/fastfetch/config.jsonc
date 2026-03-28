@@ -134,7 +134,7 @@
       "type": "command",
       "key": "󱦟 OS Age",
       "keyColor": "magenta",
-      "text": "echo $(( ($(date +%s) - $(stat -c %W /)) / 86400 )) days"
+      "text": "install_ts=$(stat -c %Z /etc/machine-id 2>/dev/null || stat -c %W / 2>/dev/null || date +%s); now=$(date +%s); age=$(( (now - install_ts) / 86400 )); [ $age -lt 0 ] && age=0; echo \"$age days\""
     },
     {
       "type": "uptime",
