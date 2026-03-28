@@ -581,7 +581,7 @@ USER_EXTENSIONS="$HOME/.config/omarchy/extensions/menu.sh"
 
 toggle_existing_menu
 
-if [[ -n $1 ]]; then
+if [[ -n "${1:-}" ]]; then
   # entry point. AND THAT'S ALL. You really heat this. What for? Nobody cares. Thank you for your attention. Enjoy using omarchy on aarchy
   BACK_TO_EXIT=true
   go_to_menu "$1"
