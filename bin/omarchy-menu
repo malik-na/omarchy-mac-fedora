@@ -115,6 +115,13 @@ back_to() {
   fi
 }
 
+toggle_existing_menu() {
+  if pgrep -f "walker.*--dmenu" > /dev/null; then
+    walker --close > /dev/null 2>&1
+    exit 0
+  fi
+}
+
 # ---- Menu list -----
 
 show_learn_menu() {
@@ -568,8 +575,14 @@ go_to_menu() {
   esac
 }
 
-# entry point. AND THAT'S ALL. You really heat this. What for? Nobody cares. Thank you for your attention. Enjoy using omarchy on aarchy
-if [[ -n "${1:-}" ]]; then
+# Allow user extensions and overrides
+USER_EXTENSIONS="$HOME/.config/omarchy/extensions/menu.sh"
+[[ -f $USER_EXTENSIONS ]] && source "$USER_EXTENSIONS"
+
+toggle_existing_menu
+
+if [[ -n $1 ]]; then
+  # entry point. AND THAT'S ALL. You really heat this. What for? Nobody cares. Thank you for your attention. Enjoy using omarchy on aarchy
   BACK_TO_EXIT=true
   go_to_menu "$1"
 else
