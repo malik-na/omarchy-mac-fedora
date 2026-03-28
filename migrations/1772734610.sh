@@ -1,9 +1,6 @@
-echo "Remap Copilot key to Omarchy Menu using makima"
+echo "Remove makima key remap integration from Fedora builds"
 
-# makima-bin is not available on all Fedora repo setups.
-# Keep migration non-fatal so updates continue cleanly.
-if omarchy-pkg-add makima-bin >/dev/null 2>&1; then
-	source "$OMARCHY_PATH/install/config/makima.sh"
-else
-	echo "Skipping makima key remap (makima-bin not available in current repos)"
-fi
+sudo systemctl disable --now makima 2>/dev/null || true
+sudo rm -rf /etc/systemd/system/makima.service.d 2>/dev/null || true
+rm -rf "$HOME/.config/makima" 2>/dev/null || true
+omarchy-pkg-drop makima-bin || true
