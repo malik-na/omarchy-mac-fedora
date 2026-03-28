@@ -10,10 +10,20 @@ launch_waybar_once() {
   fi
 }
 
-# Safety: if no waybar is running after a theme switch, bring one back.
-if ! pgrep -x waybar >/dev/null; then
-  sleep 1
-  if ! pgrep -x waybar >/dev/null; then
-    launch_waybar_once
-  fi
+# Let restart/start operations settle before checking final state.
+sleep 1
+
+count=$(pgrep -xc waybar || true)
+
+# If race conditions left multiple instances alive, collapse them into exactly one.
+if (( count > 1 )); then
+  pkill -x waybar 2>/dev/null || true
+  sleep 0.2
+  launch_waybar_once
+  exit 0
+fi
+
+# If there is no instance at all after settle time, start one.
+if (( count == 0 )); then
+  launch_waybar_once
 fi
