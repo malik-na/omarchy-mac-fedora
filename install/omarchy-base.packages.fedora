@@ -42,6 +42,7 @@ zoxide
 fastfetch
 jq
 htop
+tmux
 
 # Development
 neovim
