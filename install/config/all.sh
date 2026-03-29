@@ -28,6 +28,7 @@ run_logged $OMARCHY_INSTALL/config/powerprofilesctl-rules.sh
 run_logged $OMARCHY_INSTALL/config/wifi-powersave-rules.sh
 run_logged $OMARCHY_INSTALL/config/btrfs-snapper.sh
 run_logged $OMARCHY_INSTALL/config/grub-btrfs.sh
+run_logged $OMARCHY_INSTALL/config/plocate-ac-only.sh
 run_logged $OMARCHY_INSTALL/config/hardware/network.sh
 run_logged $OMARCHY_INSTALL/config/hardware/set-wireless-regdom.sh
 run_logged $OMARCHY_INSTALL/config/hardware/bluetooth.sh
