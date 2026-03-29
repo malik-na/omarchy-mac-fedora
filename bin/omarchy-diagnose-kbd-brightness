@@ -1,0 +1,14 @@
+#!/bin/bash
+
+echo "Listening for keyboard events..."
+echo "Press the keyboard brightness up/down keys (F5/F6 area)"
+echo "Press Ctrl+C to stop"
+echo ""
+
+# Use libinput to debug - shows raw key events
+# This should work without sudo for keyboard events
+libinput debug-events --timeout 5 2>&1 | grep -E "key|KEY|bright|BRIGHT" || echo "No brightness key events detected in 5 seconds"
+
+echo ""
+echo "---"
+echo "Now checking with evtest (checking which event device is keyboard)..."
