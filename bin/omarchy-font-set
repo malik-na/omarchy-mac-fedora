@@ -27,18 +27,6 @@ if [[ -n $font_name ]]; then
     sed -i "s/font-family: .*/font-family: '$font_name';/g" ~/.config/waybar/style.css
     sed -i "s/font-family: .*/font-family: '$font_name';/g" ~/.config/swayosd/style.css
 
-    if [[ -f ~/.config/fuzzel/fuzzel.ini ]]; then
-      fuzzel_font_size="${OMARCHY_FUZZEL_FONT_SIZE:-}"
-      if [[ -z "$fuzzel_font_size" ]]; then
-        fuzzel_font_size="$(sed -nE '/^font=/ { s/^font=.*:size=([0-9]+).*$/\1/p; q }' ~/.config/fuzzel/fuzzel.ini)"
-      fi
-      if ! [[ "$fuzzel_font_size" =~ ^[0-9]+$ ]]; then
-        fuzzel_font_size=14
-      fi
-
-      sed -i -E "s|^font=.*$|font=${font_name_escaped}:size=${fuzzel_font_size}|" ~/.config/fuzzel/fuzzel.ini
-    fi
-
     xmlstarlet ed -L \
       -u '//match[@target="pattern"][test/string="monospace"]/edit[@name="family"]/string' \
       -v "$font_name" \

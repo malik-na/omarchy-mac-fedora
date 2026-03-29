@@ -1,7 +1,23 @@
 #!/bin/bash
 # Ensure we have gum available
 if ! command -v gum &>/dev/null; then
-  if [[ -x "${OMARCHY_INSTALL:-$HOME/.local/share/omarchy/install}/helpers/fedora-gum.sh" ]]; then
+  if [[ ${OMARCHY_DRY_RUN:-0} == "1" ]]; then
+    gum() {
+      case "$1" in
+        style)
+          shift
+          printf '%s\n' "$*"
+          ;;
+        confirm)
+          return 1
+          ;;
+        *)
+          shift
+          printf '[DRY-RUN gum] %s\n' "$*"
+          ;;
+      esac
+    }
+  elif [[ -x "${OMARCHY_INSTALL:-$HOME/.local/share/omarchy/install}/helpers/fedora-gum.sh" ]]; then
     bash "${OMARCHY_INSTALL:-$HOME/.local/share/omarchy/install}/helpers/fedora-gum.sh"
   else
     sudo dnf install -y gum
