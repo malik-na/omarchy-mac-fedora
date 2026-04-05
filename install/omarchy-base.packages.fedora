@@ -68,6 +68,7 @@ libreoffice
 kdenlive
 evince
 nautilus
+nautilus-python
 gnome-calculator
 
 # System Utilities
