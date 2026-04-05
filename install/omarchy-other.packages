@@ -39,6 +39,8 @@ pipewire-jack
 pipewire-pulse
 qt6-wayland
 sassc
+libqalculate
+qalculate
 snapper
 thermald
 webp-pixbuf-loader

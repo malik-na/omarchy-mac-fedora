@@ -11,6 +11,9 @@ cat >~/.config/systemd/user/elephant.service.d/10-omarchy-path.conf <<EOF
 Environment=OMARCHY_PATH=$OMARCHY_PATH
 EOF
 
+mkdir -p ~/.config/qalculate
+touch ~/.config/qalculate/qalc.cfg
+
 if command -v omarchy-refresh-walker >/dev/null 2>&1; then
   omarchy-refresh-walker || true
 fi
