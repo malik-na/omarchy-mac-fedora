@@ -6,6 +6,7 @@
 # --- Omarchy core package list ---
 # These packages are always installed (required for a working system):
 gum
+util-linux-script
 linux-asahi
 asahi-desktop-meta
 linux-asahi-headers

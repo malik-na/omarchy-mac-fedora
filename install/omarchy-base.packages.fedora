@@ -78,6 +78,7 @@ pavucontrol
 gum
 plymouth
 cups
+util-linux-script
 snapper
 btrfs-assistant
 python3-dnf-plugin-snapper
