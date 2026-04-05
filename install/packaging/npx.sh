@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 omarchy-npx-install @openai/codex codex
 omarchy-npx-install @google/gemini-cli gemini
 omarchy-npx-install @github/copilot copilot

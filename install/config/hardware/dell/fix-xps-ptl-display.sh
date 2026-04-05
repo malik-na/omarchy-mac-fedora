@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # Fix display issues on Dell XPS 2026+ with LG OLED panel and Intel Panther Lake (Xe3) GPU.
 # Power-saving features cause the screen to run at 10hz.
 if omarchy-hw-match "XPS" \
