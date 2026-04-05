@@ -80,6 +80,10 @@ prefix = "."
 provider = "files"
 
 [[providers.prefixes]]
+prefix = "."
+provider = "files"
+
+[[providers.prefixes]]
 prefix = ":"
 provider = "symbols"
 
