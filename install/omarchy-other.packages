@@ -39,8 +39,10 @@ pipewire-jack
 pipewire-pulse
 qt6-wayland
 sassc
+libqalculate
+qalculate
 snapper
-wayfreeze-git
+#thermald (x86_64-only, installed conditionally via install/config/hardware/intel/thermald.sh)
 webp-pixbuf-loader
 wget
 yay-debug
