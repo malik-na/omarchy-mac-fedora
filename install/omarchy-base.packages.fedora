@@ -79,6 +79,9 @@ gum
 plymouth
 cups
 util-linux-script
+libqalculate
+qalculate
+plocate
 snapper
 btrfs-assistant
 python3-dnf-plugin-snapper
