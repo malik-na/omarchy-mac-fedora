@@ -42,7 +42,7 @@ sassc
 libqalculate
 qalculate
 snapper
-thermald
+#thermald (x86_64-only, installed conditionally via install/config/hardware/intel/thermald.sh)
 webp-pixbuf-loader
 wget
 yay-debug
