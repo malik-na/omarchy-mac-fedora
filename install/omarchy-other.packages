@@ -8,6 +8,7 @@ base-devel
 #broadcom-wl (x86_64 DKMS driver, unsupported on aarch64)
 btrfs-progs
 #dart (binary distribution not available on aarch64)
+util-linux-script
 dkms
 egl-wayland
 git
@@ -39,8 +40,10 @@ pipewire-jack
 pipewire-pulse
 qt6-wayland
 sassc
+libqalculate
+qalculate
 snapper
-wayfreeze-git
+#thermald (x86_64-only, installed conditionally via install/config/hardware/intel/thermald.sh)
 webp-pixbuf-loader
 wget
 yay-debug

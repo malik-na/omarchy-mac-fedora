@@ -17,6 +17,7 @@ run_logged $OMARCHY_INSTALL/config/walker-elephant.sh
 run_logged $OMARCHY_INSTALL/config/fix-powerprofilesctl-shebang.sh
 run_logged $OMARCHY_INSTALL/config/docker.sh
 run_logged $OMARCHY_INSTALL/config/mimetypes.sh
+run_logged $OMARCHY_INSTALL/config/nautilus-python.sh
 run_logged $OMARCHY_INSTALL/config/remove-fcitx5-autostart.sh
 run_logged $OMARCHY_INSTALL/config/localdb.sh
 run_logged $OMARCHY_INSTALL/config/fast-shutdown.sh
@@ -36,5 +37,6 @@ run_logged $OMARCHY_INSTALL/config/hardware/printer.sh
 run_logged $OMARCHY_INSTALL/config/hardware/usb-autosuspend.sh
 run_logged $OMARCHY_INSTALL/config/hardware/ignore-power-button.sh
 run_logged $OMARCHY_INSTALL/config/hardware/fix-intel-panther-lake-display.sh
-run_logged $OMARCHY_INSTALL/config/hardware/fix-f13-amd-audio-input.sh
+run_logged $OMARCHY_INSTALL/config/hardware/framework/fix-f13-amd-audio-input.sh
 run_logged $OMARCHY_INSTALL/config/hardware/keyboard-backlight.sh
+run_logged $OMARCHY_INSTALL/config/hardware/intel/thermald.sh

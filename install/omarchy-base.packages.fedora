@@ -68,6 +68,7 @@ libreoffice
 kdenlive
 evince
 nautilus
+nautilus-python
 gnome-calculator
 
 # System Utilities
@@ -78,6 +79,10 @@ pavucontrol
 gum
 plymouth
 cups
+util-linux-script
+libqalculate
+qalculate
+plocate
 snapper
 btrfs-assistant
 python3-dnf-plugin-snapper

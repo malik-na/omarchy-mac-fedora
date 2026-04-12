@@ -9,6 +9,9 @@ if ! is_fedora; then
   exit 0
 fi
 
+# 0. Enable Flathub remote (required for Flatpak installs)
+flatpak remote-add --if-not-exists --user flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+
 # 1. lazydocker (GitHub binary)
 if ! command -v lazydocker &>/dev/null; then
   echo "Installing lazydocker (GitHub binary)..."

@@ -13,7 +13,7 @@ _This project is an extension of [Omarchy Mac](https://github.com/malik-na/omarc
 ## Quick links
 
 - Fedora Asahi device support: https://asahilinux.org/fedora/#device-support
-- Omarchy Mac Discord: https://discord.gg/KNQRk7dMzy
+- Omarchy Mac Fedora Discord: https://discord.gg/jdqjcPxxJe
 - External monitor discussion: https://github.com/malik-na/omarchy-mac-fedora/discussions/73
 - Support the project: https://buymeacoffee.com/malik2015no
 
@@ -152,7 +152,7 @@ git -C ~/.local/share/omarchy status -sb
 
 Need help or want to share your setup?
 
-- Discord: https://discord.gg/KNQRk7dMzy
+- Discord: https://discord.gg/jdqjcPxxJe
 - Support the project: [![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-FFDD00?style=for-the-badge&logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/malik2015no)
 
 ---
