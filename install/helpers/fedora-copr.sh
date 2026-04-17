@@ -11,7 +11,7 @@ fi
 
 # List of required COPR repos (from Research.md)
 COPR_REPOS=(
-  "lionheartp/Hyprlandtechnochip/Hyprland-aarch64"
+  "lionheartp/Hyprland"
   "atim/starship"
   "atim/lazygit"
   "pgdev/ghostty"
