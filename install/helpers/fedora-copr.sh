@@ -54,6 +54,7 @@ echo "COPR repositories enabled."
 # -------------------------------------------------------------
 LIONHEARTP_REPO_FILE="/etc/yum.repos.d/_copr:copr.fedorainfracloud.org:lionheartp:Hyprland.repo"
 SOLOPASHA_REPO_FILE="/etc/yum.repos.d/_copr:copr.fedorainfracloud.org:solopasha:hyprland.repo"
+LIONHEARTP_EXCLUDE_LINE="exclude=gtk4* gtk3* pango* cairo*"
 
 echo "Applying repo protections for Hyprland stability..."
 
@@ -71,8 +72,30 @@ fi
 
 if [[ -f "$LIONHEARTP_REPO_FILE" ]]; then
   sudo sed -i '/^priority=/d' "$LIONHEARTP_REPO_FILE"
+  sudo sed -i '/^[[:space:]]*exclude=/d' "$LIONHEARTP_REPO_FILE"
   
   # Boost priority for the Asahi safe build
   echo "priority=10" | sudo tee -a "$LIONHEARTP_REPO_FILE" >/dev/null
+  echo "$LIONHEARTP_EXCLUDE_LINE" | sudo tee -a "$LIONHEARTP_REPO_FILE" >/dev/null
   echo "✓ Lionheartp repo priority applied."
+fi
+
+echo "Running Fedora package reconciliation after COPR setup..."
+if [[ "${OMARCHY_DRY_RUN:-0}" == "1" ]]; then
+  echo "[DRY-RUN] Would run: sudo dnf distro-sync -y --refresh --allowerasing"
+else
+  if ! sudo dnf distro-sync -y --refresh --allowerasing; then
+    echo "✗ Fedora distro-sync failed after COPR setup"
+    exit 1
+  fi
+fi
+
+echo "Installing official GTK/Pango/Cairo build dependencies..."
+if [[ "${OMARCHY_DRY_RUN:-0}" == "1" ]]; then
+  echo "[DRY-RUN] Would run: sudo dnf install -y gtk4-devel gtk4-layer-shell-devel pango-devel cairo-devel --allowerasing"
+else
+  if ! sudo dnf install -y gtk4-devel gtk4-layer-shell-devel pango-devel cairo-devel --allowerasing; then
+    echo "✗ Failed to install official GTK/Pango/Cairo build dependencies"
+    exit 1
+  fi
 fi

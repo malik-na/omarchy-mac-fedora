@@ -256,6 +256,7 @@ BUILD_DEPS=(
   cmake
   pkgconf-pkg-config
   cairo-devel
+  pango-devel
   poppler-glib-devel
   glib2-devel
   gtk4-devel
@@ -267,6 +268,26 @@ BUILD_DEPS=(
   golang
   git
 )
+
+
+ensure_official_gtk_build_deps() {
+  local gtk_build_deps=(
+    gtk4-devel
+    gtk4-layer-shell-devel
+    pango-devel
+    cairo-devel
+  )
+
+
+  if [[ "${OMARCHY_DRY_RUN:-0}" == "1" ]]; then
+    echo "[DRY-RUN] Would run: sudo dnf install -y ${gtk_build_deps[*]} --allowerasing"
+    return 0
+  fi
+
+
+  echo "[INFO] Ensuring official GTK/Pango/Cairo build dependencies..."
+  sudo dnf install -y "${gtk_build_deps[@]}" --allowerasing
+}
 
 
 fail_walker_install() {
@@ -291,6 +312,11 @@ fi
 
 
 # Build fallback path.
+ensure_official_gtk_build_deps || {
+  fail_walker_install "Failed to install official GTK build dependencies"
+}
+
+
 ensure_rust_toolchain || {
   fail_walker_install "Rust toolchain unavailable"
 }
