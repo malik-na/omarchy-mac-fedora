@@ -11,7 +11,7 @@ fi
 
 # List of required COPR repos (from Research.md)
 COPR_REPOS=(
-  "technochip/Hyprland-aarch64"
+  "lionheartp/Hyprland"
   "atim/starship"
   "atim/lazygit"
   "pgdev/ghostty"
@@ -49,10 +49,10 @@ echo "COPR repositories enabled."
 
 # -------------------------------------------------------------
 # HYPRLAND REPOSITORY PROTECTION 
-# Technochip must provide Hyprland core to keep Asahi compat.
+# Lionheartp must provide Hyprland core to keep Asahi compat.
 # Solopasha is used only as fallback for utilities (e.g. satty).
 # -------------------------------------------------------------
-TECHNOCHIP_REPO_FILE="/etc/yum.repos.d/_copr:copr.fedorainfracloud.org:technochip:Hyprland-aarch64.repo"
+LIONHEARTP_REPO_FILE="/etc/yum.repos.d/_copr:copr.fedorainfracloud.org:lionheartp:Hyprland.repo"
 SOLOPASHA_REPO_FILE="/etc/yum.repos.d/_copr:copr.fedorainfracloud.org:solopasha:hyprland.repo"
 
 echo "Applying repo protections for Hyprland stability..."
@@ -69,10 +69,10 @@ if [[ -f "$SOLOPASHA_REPO_FILE" ]]; then
   echo "✓ Solopasha repo limits applied."
 fi
 
-if [[ -f "$TECHNOCHIP_REPO_FILE" ]]; then
-  sudo sed -i '/^priority=/d' "$TECHNOCHIP_REPO_FILE"
+if [[ -f "$LIONHEARTP_REPO_FILE" ]]; then
+  sudo sed -i '/^priority=/d' "$LIONHEARTP_REPO_FILE"
   
   # Boost priority for the Asahi safe build
-  echo "priority=10" | sudo tee -a "$TECHNOCHIP_REPO_FILE" >/dev/null
-  echo "✓ Technochip repo priority applied."
+  echo "priority=10" | sudo tee -a "$LIONHEARTP_REPO_FILE" >/dev/null
+  echo "✓ Lionheartp repo priority applied."
 fi
